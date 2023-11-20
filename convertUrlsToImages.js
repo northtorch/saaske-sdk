@@ -1,15 +1,15 @@
 function convertUrlsToImages(imgSize = 50) {
     function replaceUrlsWithImgTags() {
         // URL レコードの a タグを全取得
-        let aTags = document.getElementsByClassName("type_url");
+        const aTags = document.getElementsByClassName("type_url");
 
         for (let i = 0; i < aTags.length; i++) {
             // a タグ全体を取得し、URL部分のみを抽出
-            let aTag = aTags[i].querySelector('a');
-            let imgSrc = aTag.getAttribute('href');
+            const aTag = aTags[i].querySelector('a');
+            const imgSrc = aTag.getAttribute('href');
 
             // img タグを作成して、画像をセット
-            let imgTag = document.createElement('img');
+            const imgTag = document.createElement('img');
             imgTag.setAttribute("src", imgSrc);
             imgTag.setAttribute("width", imgSize);
 

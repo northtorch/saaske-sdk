@@ -1,9 +1,9 @@
-function displayImage(imgSize = 50) {
+function convertUrlsToImages(imgSize = 50) {
     function replaceUrlsWithImgTags() {
         // URL レコードの a タグを全取得
         let aTags = document.getElementsByClassName("type_url");
 
-        for (i = 0; aTags.length; i++) {
+        for (let i = 0; i < aTags.length; i++) {
             // a タグ全体を取得し、URL部分のみを抽出
             let aTag = aTags[i].querySelector('a');
             let imgSrc = aTag.getAttribute('href');
@@ -19,13 +19,11 @@ function displayImage(imgSize = 50) {
     }
     window.addEventListener('load', replaceUrlsWithImgTags);
 
-    // ページネーションで移動したときににも反映させる
+    // ページネーションで移動したときにも反映させる
     // ajaxComplete でページの変遷後の状態を検出
     $(document).ajaxComplete(function () {
         replaceUrlsWithImgTags();
     });
 }
 
-displayImage();
-
-
+convertUrlsToImages();

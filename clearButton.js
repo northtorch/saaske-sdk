@@ -1,31 +1,64 @@
-// ボタンオブジェクトを作成
-function createButton(innerText, name) {
-    let newButton = document.createElement('BUTTON');
-    newButton.innerHTML = innerText;
-    newButton.id = name;
-    newButton.className = name;
-    return newButton;
-}
+function setClearButton(caption, labels) {
+    // ボタンオブジェクトを作成
+    function createButton(innerText, name) {
+        const newButton = document.createElement('BUTTON');
+        newButton.innerHTML = innerText;
+        newButton.id = name;
+        newButton.className = name;
+        return newButton;
+    };
 
-// クリアボタンを作成して登録ボタンの後に配置
-function clearButton() {
-    let clearButton = createButton('クリア', 'clear')
-    clearButton.style.padding = '0.38rem 2rem';
-    clearButton.style.marginBottom = '3px';
-    let baseElement = document.querySelector(".submit_box.sticky.fixed");
-    baseElement.appendChild(clearButton);
+    // textContentから要素を取得する
+    function findElementIdByText(labels) {
+        // 全要素を取得
+        const allElements = document.body.getElementsByTagName('*');
+        const matchingElements = [];
 
-    // クリアボタンが押された場合の挙動を定義
-    clearButton.addEventListener('click', function (event) {
-        const excludeInputType = 'input:not([type="submit"]):not([type="hidden"])'
-        const inputs = document.querySelectorAll(excludeInputType);
-        // 「登録」以外の input 要素の値を空に設定
-        inputs.forEach(input => {
-            input.value = '';
+        for (let element of allElements) {
+            labels.forEach(label => {
+                if (element.textContent.trim() === label) {
+                    // 要素が見つかった場合
+                    matchingElements.push(element);
+                };
+            });
+        };
+        return matchingElements;
+    };
+
+    function createClearButton(caption, elmToDelete) {
+        // クリアボタンを作成して登録ボタンの後に配置
+        const clearButton = createButton(caption, 'clear')
+        clearButton.style.padding = '0.38rem 2rem';
+        clearButton.style.marginBottom = '3px';
+        const baseElement = document.querySelector('.submit_box.sticky.fixed');
+        baseElement.appendChild(clearButton);
+
+        clearButton.addEventListener('click', function (event) {
+            // 各name属性に対して処理を実行
+            elmToDelete.forEach(elm => {
+                const inputTag = elm.getElementsByTagName('input');
+
+                if (inputTag[0]) {
+                    try {
+                        inputTag[0].value = '';
+                    } catch (error) {
+                        console.error(error);
+                    }
+                    // 登録ボタンが発火しないように制御
+                    event.preventDefault();
+                };
+            });
         });
-        // 登録ボタンが発火しないように制御
-        event.preventDefault();
-    });
-}
+    };
 
-window.addEventListener("DOMContentLoaded", clearButton);
+    function main() {
+        elements = findElementIdByText(labels);
+        createClearButton(caption = caption, elmToDelete = elements);
+    };
+
+    // ロード後に実行
+    window.addEventListener('DOMContentLoaded', main);
+};
+
+labels = ['URL', '一行テキスト']
+setClearButton(caption = 'クリア', labels = labels);

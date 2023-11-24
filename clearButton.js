@@ -17,7 +17,7 @@ function setClearButton(caption, labels) {
         for (let element of allElements) {
             labels.forEach(label => {
                 if (element.textContent.trim() === label) {
-                    // 要素が見つかった場合
+                    // 要素が見つかったら配列に追加
                     matchingElements.push(element);
                 };
             });
@@ -34,17 +34,16 @@ function setClearButton(caption, labels) {
         baseElement.appendChild(clearButton);
 
         clearButton.addEventListener('click', function (event) {
-            // 各name属性に対して処理を実行
+            // input タグの value をクリア
             elmToDelete.forEach(elm => {
                 const inputTag = elm.getElementsByTagName('input');
-
                 if (inputTag[0]) {
                     try {
                         inputTag[0].value = '';
                     } catch (error) {
                         console.error(error);
                     }
-                    // 登録ボタンが発火しないように制御
+                    // 登録ボタンが発火を防ぐ
                     event.preventDefault();
                 };
             });

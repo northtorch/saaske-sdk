@@ -17,7 +17,7 @@ function setClearButton(caption, labels) {
         for (let element of allElements) {
             labels.forEach(label => {
                 if (element.textContent.trim() === label) {
-                    // 要素が見つかったら配列に追加
+                    // 指定のラベルの要素があればリストに追加
                     matchingElements.push(element);
                 };
             });
@@ -34,7 +34,7 @@ function setClearButton(caption, labels) {
         baseElement.appendChild(clearButton);
 
         clearButton.addEventListener('click', function (event) {
-            // input タグの value をクリア
+            // input タグの値をクリア
             elmToDelete.forEach(elm => {
                 const inputTag = elm.getElementsByTagName('input');
                 if (inputTag[0]) {
@@ -51,13 +51,13 @@ function setClearButton(caption, labels) {
     };
 
     function main() {
-        elements = findElementIdByText(labels);
-        createClearButton(caption = caption, elmToDelete = elements);
+        const elements = findElementIdByText(labels);
+        createClearButton(caption, elements);
     };
 
     // ロード後に実行
     window.addEventListener('DOMContentLoaded', main);
-};
+}
 
-labels = ['URL', '一行テキスト']
-setClearButton(caption = 'クリア', labels = labels);
+const labels = ['URL', '一行テキスト'];
+setClearButton('クリア', labels);

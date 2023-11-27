@@ -8,24 +8,44 @@ function setClearButton(caption, labels) {
         return newButton;
     };
 
-    // textContentから要素を取得する
-    function findElementIdByText(labels) {
-        // 全要素を取得
-        const allElements = document.body.getElementsByTagName('*');
-        const matchingElements = [];
+    // フォームを初期化
+    function initForm(labels) {
+        const targetType = 'input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], textarea, select'
+        let targetElements = []
 
-        for (let element of allElements) {
+        // labelの指定があれば、そのlabelの要素のみを取得
+        if (labels.length) {
+            // dlタグの要素を全取得
+            const dlList = document.getElementsByTagName('dl')
             labels.forEach(label => {
-                if (element.textContent.trim() === label) {
-                    // 指定のラベルの要素があればリストに追加
-                    matchingElements.push(element);
+                for (i = 0; i < dlList.length; i++) {
+                    const element = dlList[i]
+                    if (element.getElementsByTagName('dt')[0].textContent.trim() === label) {
+                        targetElements.push(element.querySelector(targetType))
+                    };
                 };
             });
+        } else {
+            // label無指定なら、全要素を取得
+            targetElements = document.querySelectorAll(targetType)
         };
-        return matchingElements;
+        for (i = 0; targetElements.length > i; i++) {
+            const elm = targetElements[i];
+            if (elm.tagName === 'SELECT') {
+                // selectタグの場合は初期値に戻す
+                elm.selectedIndex = -1;
+            } else {
+                // selectタグ以外なら値を空白にする
+                try {
+                    elm.value = '';
+                } catch (error) {
+                    console.error(error);
+                };
+            };
+        };
     };
 
-    function createClearButton(caption, elmToDelete) {
+    function createClearButton(caption, labels) {
         // クリアボタンを作成して登録ボタンの後に配置
         const clearButton = createButton(caption, 'clear')
         clearButton.style.padding = '0.38rem 2rem';
@@ -34,30 +54,18 @@ function setClearButton(caption, labels) {
         baseElement.appendChild(clearButton);
 
         clearButton.addEventListener('click', function (event) {
-            // input タグの値をクリア
-            elmToDelete.forEach(elm => {
-                const inputTag = elm.getElementsByTagName('input');
-                if (inputTag[0]) {
-                    try {
-                        inputTag[0].value = '';
-                    } catch (error) {
-                        console.error(error);
-                    }
-                    // 登録ボタンが発火を防ぐ
-                    event.preventDefault();
-                };
-            });
+            // フォームを初期化
+            initForm(labels);
+            // 登録ボタンが発火を防ぐ
+            event.preventDefault();
         });
     };
 
-    function main() {
-        const elements = findElementIdByText(labels);
-        createClearButton(caption, elements);
-    };
-
-    // ロード後に実行
-    window.addEventListener('DOMContentLoaded', main);
-}
+    // DOMが完全にロードされた後に実行
+    window.addEventListener('DOMContentLoaded', function () {
+        createClearButton(caption, labels);
+    });
+};
 
 const labels = ['URL', '一行テキスト'];
 setClearButton('クリア', labels);

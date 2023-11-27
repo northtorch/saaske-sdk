@@ -24,7 +24,11 @@ function setClearButton(caption, labels) {
                     const element = dlList[i]
                     if (element.getElementsByTagName('dt')[0].textContent.trim() === label) {
                         // labelが一致したら、その要素を取得
-                        targetElements.push(element.querySelector(targetType))
+                        // 住所など、複数の要素が紐づいている場合があるのでquerySelectorAll
+                        const pushElements = element.querySelectorAll(targetType);
+                        pushElements.forEach(pushElement => {
+                            targetElements.push(pushElement)
+                        });
                     };
                 };
             });

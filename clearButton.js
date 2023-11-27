@@ -10,7 +10,9 @@ function setClearButton(caption, labels) {
 
     // フォームを初期化
     function initForm(labels) {
+        // 削除対象のタグの種類 / type を指定
         const targetType = 'input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], textarea, select'
+        // 削除対象の要素を格納する配列
         let targetElements = []
 
         // labelの指定があれば、そのlabelの要素のみを取得
@@ -21,6 +23,7 @@ function setClearButton(caption, labels) {
                 for (i = 0; i < dlList.length; i++) {
                     const element = dlList[i]
                     if (element.getElementsByTagName('dt')[0].textContent.trim() === label) {
+                        // labelが一致したら、その要素を取得
                         targetElements.push(element.querySelector(targetType))
                     };
                 };

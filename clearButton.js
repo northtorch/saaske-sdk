@@ -63,7 +63,7 @@ function setClearButton(caption, labels) {
         clearButton.addEventListener('click', function (event) {
             // フォームを初期化
             initForm(labels);
-            // 登録ボタンが発火を防ぐ
+            // 登録ボタンの発火を防ぐ
             event.preventDefault();
         });
     };

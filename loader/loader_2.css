@@ -1,0 +1,86 @@
+.loading-screen {
+    /* ポジション */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 背景色 */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* custom-loaderより奥に表示 */
+    z-index: 3000;
+}
+
+.loader {
+    /* ポジション */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Light grey */
+    border: 5px solid #f3f3f3;
+    /* ぐるぐる部分の色（デフォルト） */
+    border-top: 5px solid #3498db;
+    /* 円形 */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    /* 選択を禁止 */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    /* loading-screenよりも手前に表示させる */
+    z-index: 3100;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ぐるぐるの下の文字列 */
+.loading-text {
+    /* ポジション */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* テキストの色 */
+    color: #fff;
+    /* ローダーとの間隔 */
+    margin-top: 70px;
+    /* フォントサイズ */
+    font-size: 20px;
+    /* 選択を禁止 */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    /* アニメーション */
+    animation: fadeIn 2.5s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    /* 50%だと文字が出現するまでの時間が長いので20%とした */
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

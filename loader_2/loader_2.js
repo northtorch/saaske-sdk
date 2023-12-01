@@ -1,10 +1,20 @@
+// ローディング画面を表示する
+function showLoadingScreen() {
+    document.getElementById('loading').style.display = 'block';
+};
+
+// ローディング画面を隠す
+function hideLoadingScreen() {
+    document.getElementById('loading').style.display = 'none';
+};
+
 function addLoader(innerText = 'Now Loading') {
     function addDiv() {
         // HTMLコードを文字列として保存
         const htmlString = `
         <div id="loading" class="loading-screen" style="display: none;">
             <div class="loader" style="border-top: 5px solid rgb(102, 173, 204);"></div>
-            <div class="loading-text">Now Loading</div>
+            <div id="loading-text" class="loading-text">Now Loading</div>
         </div>
         `;
 
@@ -33,10 +43,16 @@ function addLoader(innerText = 'Now Loading') {
         };
     };
 
+    // ローディングテキストをセットする
+    function setLoadingText() {
+        document.getElementById('loading-text').textContent = innerText;
+    };
+
     function main() {
         addDiv();
         addLoader();
         changeLoaderColor();
+        setLoadingText();
     }
     window.addEventListener('DOMContentLoaded', main)
 }

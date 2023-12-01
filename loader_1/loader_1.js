@@ -1,3 +1,13 @@
+// ローディング画面を表示する
+function showLoadingScreen() {
+    document.getElementById('loading').style.display = 'block';
+};
+
+// ローディング画面を隠す
+function hideLoadingScreen() {
+    document.getElementById('loading').style.display = 'none';
+};
+
 function addLoader() {
     // HTMLコードを文字列として保存
     const htmlString = `

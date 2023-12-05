@@ -1,3 +1,11 @@
+/*!
+ * SaaskeSDK
+ * Copyright (c) North Torch Co.,ltd. 2023
+ * Released under the MIT License.
+ * ライセンスの全文は以下をご参照ください
+ * LICENSE: https://github.com/northtorch/saaske-sdk/blob/main/LICENSE.md
+ * README: https://github.com/northtorch/saaske-sdk/blob/main/readme.md
+*/
 function setClearButton(caption, labels) {
     // ボタンオブジェクトを作成
     function createButton(innerText, name) {

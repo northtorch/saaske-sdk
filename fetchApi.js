@@ -10,20 +10,26 @@
 async function fetchData(url, method) {
     try {
         const response = await fetch(url, { method: method });
+        // レスポンスが異常
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
+        // レスポンスが正常
         return await response.json();
     } catch (error) {
+        // エラー
         console.error(`Fetch error: ${error}`);
         return null;
     };
 };
 
 async function main(url, method) {
+    // APIから受け取ったデータを格納
     const data = await fetchData(url, method);
     if (data) {
-        // alert(JSON.stringify(data));
+        // データをすべて表示
+        alert(JSON.stringify(data));
+        // 一部のデータを表示
         alert(data['description']['bodyText'])
     } else {
         console.log('データの取得に失敗しました');

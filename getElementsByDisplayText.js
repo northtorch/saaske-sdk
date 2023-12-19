@@ -7,29 +7,58 @@
  * README: https://github.com/northtorch/saaske-sdk/blob/main/readme.md
 */
 
-function getElementsByDisplayText(labels = []) {
-    // 取得するHTMLタグとtypeを定義
-    const targetType = `
-        input[type="text"], input[type="password"], input[type="email"], input[type="tel"],
-        input[type="url"], input[type="number"], textarea, select
-        `
-    // 取得した要素を格納するリスト
-    let targetElements = []
+function getElementsByDisplayText(baseList = []) {
+    // すべてのdlタグを取得
+    const dlTags = document.getElementsByTagName('dl');
+    // 結果を格納する配列
+    let targetElements = [];
 
-    // 各レコードが格納されているdlタグ要素を全取得
-    const dlTags = document.getElementsByTagName('dl')
-    labels.forEach(label => {
-        for (i = 0; i < dlTags.length; i++) {
-            const element = dlTags[i]
-            if (element.getElementsByTagName('dt')[0].textContent.trim() === label) {
-                // labelが一致したら、その要素を取得
-                // 住所など、複数の要素が紐づいている場合があるのでquerySelectorAll
-                const pushElements = element.querySelectorAll(targetType);
-                pushElements.forEach(pushElement => {
-                    targetElements.push(pushElement)
-                });
+    // すべてのdlタグをループ
+    Array.from(dlTags).forEach(dlTag => {
+        // レコード項目名部分を取得
+        const dtTag = dlTag.getElementsByTagName('dt')[0]
+        const dtText = dtTag.textContent.trim()
+        // テキストボックス等を取得
+        const ddTag = dlTag.getElementsByTagName('dd')[0]
+
+        if (baseList.length == 0) {
+            // 取得対象が無指定なら全取得
+            targetElements.push(ddTag);
+        } else {
+            // 取得対象の指定ありなら取得対象リストに合致しているもののみ取得
+            if (dtText.includes(baseList)) {
+                targetElements.push(ddTag);
             };
         };
     });
     return targetElements;
 };
+
+function getDetailElms(targetElement) {
+    // 取得するHTMLタグとtypeを選択
+    const targetTagAndType = `
+    input[type="text"], input[type="password"], input[type="email"], input[type="tel"],
+    input[type="url"], input[type="number"], input[type="checkbox"], input[type="radio"],
+    textarea, select, #tag_group, a
+    `
+
+    // 取得対象となるHTMLタグをすべて取得
+    const target = targetElement.querySelectorAll(targetTagAndType)
+    if (target.length == 0) {
+        // 該当なしならnullを返す
+        return null;
+    } else {
+        // 該当ありなら取得したNodeListを返す
+        return target;
+    };
+};
+
+function getTextFromSelect2(selectTagElm) {
+    // select2 の元となる要素のidを取得
+    const targetId = selectTagElm.id
+
+    // テキスト部分を抽出
+    const $originalSelect = $(`#${targetId}`);
+    const selectedText = $originalSelect.find('option:selected').text();
+    return selectedText;
+}

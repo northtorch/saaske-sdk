@@ -8,6 +8,11 @@
 */
 
 function getElementsByDisplayText(baseList = []) {
+    // 引数で受け取った要素が配列かどうかを確認
+    if (!Array.isArray(baseList)) {
+        throw new Error('引数は配列である必要があります');
+    };
+
     // すべてのdlタグを取得
     const dlTags = document.getElementsByTagName('dl');
     // 結果を格納する配列
@@ -53,7 +58,7 @@ function getDetailElms(targetElement) {
     };
 };
 
-function getTextFromSelect2(selectTagElm) {
+function getTextFromSelection(selectTagElm) {
     // select2 の元となる要素のidを取得
     const targetId = selectTagElm.id
 

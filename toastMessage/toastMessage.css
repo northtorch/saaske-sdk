@@ -1,0 +1,55 @@
+/*!
+ * SaaskeSDK
+ * Copyright (c) North Torch Co.,ltd. 2023
+ * Released under the MIT License.
+ * ライセンスの全文は以下をご参照ください
+ * LICENSE: https://github.com/northtorch/saaske-sdk/blob/main/LICENSE.md
+ * README: https://github.com/northtorch/saaske-sdk/blob/main/readme.md
+*/
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    /* 少し早めに透明度を下げておく */
+    20% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.toastFadeIn {
+    animation: fadeIn 1s ease;
+}
+
+.toast {
+    /* デフォルトは隠す、クリックで表示 */
+    visibility: hidden;
+    max-width: 350px;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 10000;
+}
+
+.toast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toast-close {
+    border: none;
+    background: none;
+    font-size: 1.6rem;
+}
